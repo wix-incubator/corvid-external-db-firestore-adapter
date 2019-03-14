@@ -1,0 +1,14 @@
+{
+  "name": "firestore-connector-node",
+  "version": "1.0.0",
+  "description": "Wix Data Firestore connector example for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "firestore"
+  ],
+  "author": "",
+  "license": "ISC"
+}
