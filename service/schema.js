@@ -2,7 +2,7 @@ exports.find = async () => {
   throw new Error("NOT IMPLEMENTED")
 }
 
-exports.get = async () => {
+exports.list = async () => {
   throw new Error("NOT IMPLEMENTED")
 }
 

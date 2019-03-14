@@ -2,6 +2,10 @@ exports.find = async () => {
     throw new Error("NOT IMPLEMENTED")
 }
 
+exports.get = async () => {
+    throw new Error("NOT IMPLEMENTED")
+}
+
 exports.insert = async () => {
     throw new Error("NOT IMPLEMENTED")
 }

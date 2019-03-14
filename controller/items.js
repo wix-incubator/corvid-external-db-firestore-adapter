@@ -1,37 +1,37 @@
 const Storage = require('../service/storage')
 
 exports.findItems = async (req, res) => {
-  const findResult = await Storage.findItems(req)
+  const findResult = await Storage.find(req)
 
   res.json(findResult)
 }
 
 exports.getItem = async (req, res) => {
-  const getResult = await Storage.getItem(req)
+  const getResult = await Storage.get(req)
 
   res.json(getResult)
 }
 
 exports.insertItem = async (req, res) => {
-  const insertResult = await Storage.insertItem(req)
+  const insertResult = await Storage.insert(req)
 
   res.json(insertResult)
 }
 
 exports.updateItem = async (req, res) => {
-  const updateResult = await Storage.updateItem(req)
+  const updateResult = await Storage.update(req)
 
   res.json(updateResult)
 }
 
 exports.removeItem = async (req, res) => {
-  const removeResult = await Storage.removeItem(req)
+  const removeResult = await Storage.remove(req)
 
   res.json(removeResult)
 }
 
 exports.countItems = async (req, res) => {
-  const countResult = await Storage.countItems(req)
+  const countResult = await Storage.count(req)
 
   res.json(countResult)
 }
