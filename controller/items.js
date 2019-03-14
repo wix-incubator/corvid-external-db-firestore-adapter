@@ -1,5 +1,3 @@
-'use strict';
-
 exports.findItems = async (req, res) => {
   throw new Error("NOT IMPLEMENTED")
 }

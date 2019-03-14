@@ -1,5 +1,3 @@
-'use strict';
-
 exports.findSchemas = async (req, res) => {
   throw new Error("NOT IMPLEMENTED")
 }

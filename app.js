@@ -1,7 +1,4 @@
-'use strict';
-
 const express = require('express')
-
 const items = require('./controller/items');
 const schemas = require('./controller/schemas');
 const provision = require('./controller/provision');
