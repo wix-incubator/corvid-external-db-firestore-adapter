@@ -1,3 +1,7 @@
+const Schema = require('../service/schema')
+
 exports.provision = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const provisionResult = await Schema.provision(req)
+
+  res.json(provisionResult)
 }

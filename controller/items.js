@@ -1,23 +1,37 @@
+const Storage = require('../service/storage')
+
 exports.findItems = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const findResult = await Storage.findItems(req)
+
+  res.json(findResult)
 }
 
 exports.getItem = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const getResult = await Storage.getItem(req)
+
+  res.json(getResult)
 }
 
 exports.insertItem = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const insertResult = await Storage.insertItem(req)
+
+  res.json(insertResult)
 }
 
 exports.updateItem = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const updateResult = await Storage.updateItem(req)
+
+  res.json(updateResult)
 }
 
 exports.removeItem = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const removeResult = await Storage.removeItem(req)
+
+  res.json(removeResult)
 }
 
 exports.countItems = async (req, res) => {
-  throw new Error("NOT IMPLEMENTED")
+  const countResult = await Storage.countItems(req)
+
+  res.json(countResult)
 }
