@@ -17,9 +17,9 @@ describe('Provision Controller', () => {
   describe('provision', () => {
     it('calls schema and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Schema, 'provision').withArgs(req).returns(payload)
+        sandbox.stub(Schema, 'provision').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 

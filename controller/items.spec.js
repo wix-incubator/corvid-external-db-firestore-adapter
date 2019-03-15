@@ -17,9 +17,9 @@ describe('Items Controller', () => {
   describe('findItems', () => {
     it('calls storage and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Storage, 'find').withArgs(req).returns(payload)
+        sandbox.stub(Storage, 'find').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 
@@ -35,9 +35,9 @@ describe('Items Controller', () => {
   describe('getItem', () => {
     it('calls storage and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Storage, 'get').withArgs(req).returns(payload)
+        sandbox.stub(Storage, 'get').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 
@@ -53,9 +53,9 @@ describe('Items Controller', () => {
   describe('insertItem', () => {
     it('calls storage and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Storage, 'insert').withArgs(req).returns(payload)
+        sandbox.stub(Storage, 'insert').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 
@@ -71,9 +71,9 @@ describe('Items Controller', () => {
   describe('updateItem', () => {
     it('calls storage and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Storage, 'update').withArgs(req).returns(payload)
+        sandbox.stub(Storage, 'update').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 
@@ -89,9 +89,9 @@ describe('Items Controller', () => {
   describe('removeItem', () => {
     it('calls storage and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Storage, 'remove').withArgs(req).returns(payload)
+        sandbox.stub(Storage, 'remove').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 
@@ -107,9 +107,9 @@ describe('Items Controller', () => {
   describe('countItems', () => {
     it('calls storage and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Storage, 'count').withArgs(req).returns(payload)
+        sandbox.stub(Storage, 'count').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 

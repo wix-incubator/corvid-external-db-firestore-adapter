@@ -17,9 +17,9 @@ describe('Schemas Controller', () => {
   describe('findSchemas', () => {
     it('calls schema and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Schema, 'find').withArgs(req).returns(payload)
+        sandbox.stub(Schema, 'find').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 
@@ -35,9 +35,9 @@ describe('Schemas Controller', () => {
   describe('listSchemas', () => {
     it('calls schema and responds with JSON', async () => {
         //given
-        const req = 42
+        const req = { body: 42 }
         const payload = { foo: "bar" }
-        sandbox.stub(Schema, 'list').withArgs(req).returns(payload)
+        sandbox.stub(Schema, 'list').withArgs(req.body).returns(payload)
         const jsonResponseHandler = sandbox.stub()
         const responseHandlers = { json: jsonResponseHandler }
 

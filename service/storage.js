@@ -1,23 +1,23 @@
-exports.find = async () => {
+exports.find = async payload => {
     throw new Error("NOT IMPLEMENTED")
 }
 
-exports.get = async () => {
+exports.get = async payload => {
     throw new Error("NOT IMPLEMENTED")
 }
 
-exports.insert = async () => {
+exports.insert = async payload => {
     throw new Error("NOT IMPLEMENTED")
 }
 
-exports.update = async () => {
+exports.update = async payload => {
     throw new Error("NOT IMPLEMENTED")
 }
 
-exports.remove = async () => {
+exports.remove = async payload => {
     throw new Error("NOT IMPLEMENTED")
 }
 
-exports.count = async () => {
+exports.count = async payload => {
     throw new Error("NOT IMPLEMENTED")
 }

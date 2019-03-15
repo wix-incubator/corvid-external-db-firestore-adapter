@@ -1,11 +1,11 @@
-exports.find = async () => {
+exports.find = async payload => {
   throw new Error("NOT IMPLEMENTED")
 }
 
-exports.list = async () => {
+exports.list = async payload => {
   throw new Error("NOT IMPLEMENTED")
 }
 
-exports.provision = async () => {
+exports.provision = async payload => {
   throw new Error("NOT IMPLEMENTED")
 }
