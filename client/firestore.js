@@ -1,9 +1,10 @@
 const Firestore = require('@google-cloud/firestore')
 const NotFoundError = require('../error/not-found')
 const AlreadyExistsError = require('../error/already-exists')
-const loadConfig = require('../utils/configLoader')
+const load = require('../utils/fileLoader')
+const { configValidator } = require('../utils/validators')
 
-const serviceAccount = loadConfig().googleServiceAccount
+const serviceAccount = configValidator(load('config.json')).googleServiceAccount
 const firestore = new Firestore({
   client_email: serviceAccount.client_email,
   private_key: serviceAccount.private_key,

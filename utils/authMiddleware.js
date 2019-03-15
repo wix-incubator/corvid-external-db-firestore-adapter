@@ -1,8 +1,9 @@
 const BadRequestError = require('../error/bad-request')
 const UnauthorizedError = require('../error/unauthorized')
-const loadConfig = require('./configLoader')
+const load = require('./fileLoader')
+const { configValidator } = require('../utils/validators')
 
-const configuredSecretKey = loadConfig().secretKey
+const configuredSecretKey = configValidator(load('config.json')).secretKey
 
 const extractSecretKey = requestContext => {
   if (!requestContext) {
