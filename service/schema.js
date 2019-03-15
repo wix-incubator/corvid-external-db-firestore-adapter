@@ -1,3 +1,5 @@
+const client = require('../client/firestore')
+
 exports.find = async payload => {
   throw new Error("NOT IMPLEMENTED")
 }
@@ -7,5 +9,7 @@ exports.list = async payload => {
 }
 
 exports.provision = async payload => {
-  throw new Error("NOT IMPLEMENTED")
+  await client.listCollectionIds()
+
+  return {}
 }

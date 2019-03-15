@@ -19,7 +19,9 @@ exports.get = (collectionName, itemId) => {
 }
 
 exports.listCollectionIds = () => {
-  throw new Error("NOT IMPLEMENTED")
+  return firestore
+    .listCollections()
+    .then(coll => coll.map(data => data.id))
 }
 
 exports.delete = (collectionName, itemId) => {
@@ -28,9 +30,14 @@ exports.delete = (collectionName, itemId) => {
     .delete({ exists: true })
 }
 
-exports.update = () => {
-  throw new Error("NOT IMPLEMENTED")
-}
+exports.update = (collectionName, item) => {
+  const reference = firestore.doc(`${collectionName}/${item._id}`)
+  return firestore
+    .batch()
+    .delete(reference, { exists: true })
+    .create(reference, item)
+    .commit()
+  }
 
 exports.insert = (collectionName, item) => {
   return firestore

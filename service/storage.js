@@ -29,7 +29,12 @@ exports.insert = async payload => {
 }
 
 exports.update = async payload => {
-    throw new Error("NOT IMPLEMENTED")
+    const { collectionName, item } = payload
+    await client.update(collectionName, item)
+
+    //TODO handle non existing item case (not upsert)
+
+    return item
 }
 
 exports.remove = async payload => {
