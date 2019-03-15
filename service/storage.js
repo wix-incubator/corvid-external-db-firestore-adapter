@@ -4,6 +4,7 @@ const client = require('../client/firestore')
 
 exports.find = async payload => {
     const { collectionName } = payload
+    if (!collectionName) throw new BadRequestError('Missing collectionName in request body')
 
     const results = await client.query(collectionName)
     const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id } })
@@ -62,5 +63,12 @@ exports.remove = async payload => {
 }
 
 exports.count = async payload => {
-    throw new Error("NOT IMPLEMENTED")
+    const { collectionName } = payload
+    if (!collectionName) throw new BadRequestError('Missing collectionName in request body')
+
+    const results = await client.query(collectionName)
+
+    return {
+        totalCount: results.size
+    }
 }
