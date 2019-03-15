@@ -22,10 +22,18 @@ exports.listCollectionIds = () => {
   throw new Error("NOT IMPLEMENTED")
 }
 
-exports.delete = () => {
+exports.delete = (collectionName, itemId) => {
+  return firestore
+    .doc(`${collectionName}/${itemId}`)
+    .delete({ exists: true })
+}
+
+exports.update = () => {
   throw new Error("NOT IMPLEMENTED")
 }
 
-exports.patch = () => {
-  throw new Error("NOT IMPLEMENTED")
+exports.insert = (collectionName, item) => {
+  return firestore
+    .doc(`${collectionName}/${item._id}`)
+    .create(item)
 }
