@@ -1,8 +1,8 @@
-const fs = require('fs');
 const BadRequestError = require('../error/bad-request')
 const UnauthorizedError = require('../error/unauthorized')
+const loadConfig = require('./configLoader')
 
-const configuredSecretKey = JSON.parse(fs.readFileSync('config.json')).secretKey
+const configuredSecretKey = loadConfig().secretKey
 
 const extractSecretKey = requestContext => {
   if (!requestContext) {

@@ -22,8 +22,6 @@ app.post('/data/remove', errorMiddleware(items.removeItem))
 app.post('/data/count', errorMiddleware(items.countItems))
 app.post('/provision', errorMiddleware(provision.provision))
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS='./config.json'
-
 app.listen(
   port, 
   () => console.log(`Firestore connector listening on port ${port}!`))
