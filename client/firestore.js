@@ -10,8 +10,10 @@ const firestore = new Firestore({
   projectId: serviceAccount.project_id,
 })
 
-exports.query = () => {
-  throw new Error("NOT IMPLEMENTED")
+exports.query = (collectionName) => {
+  return firestore
+    .collection(collectionName)
+    .get()
 }
 
 exports.get = (collectionName, itemId) => {

@@ -3,7 +3,12 @@ const BadRequestError = require('../error/bad-request')
 const client = require('../client/firestore')
 
 exports.find = async payload => {
-    throw new Error("NOT IMPLEMENTED")
+    const { collectionName } = payload
+
+    const results = await client.query(collectionName)
+    const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id } })
+    
+    return enhanced
 }
 
 exports.get = async payload => {
