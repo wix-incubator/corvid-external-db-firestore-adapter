@@ -1,11 +1,25 @@
-exports.find = async () => {
-  throw new Error("NOT IMPLEMENTED")
+const client = require('../client/firestore')
+const load = require('../utils/fileLoader')
+
+const schemas = load('schemas.json')
+
+exports.find = async payload => {
+  const { schemaIds } = payload
+  if (!schemaIds) throw new BadRequestError('Missing schemaIds in request body')
+
+  const filtered = schemas.filter(schema => schemaIds.contains(schema.id))
+  
+  return {
+    schemas : filtered
+  }
 }
 
-exports.get = async () => {
-  throw new Error("NOT IMPLEMENTED")
+exports.list = async payload => {
+  return { schemas }
 }
 
-exports.provision = async () => {
-  throw new Error("NOT IMPLEMENTED")
+exports.provision = async payload => {
+  await client.listCollectionIds()
+
+  return {}
 }
