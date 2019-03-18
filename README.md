@@ -49,3 +49,4 @@ An example configuration can be found in `schemas.example.json` file.
 	```
 	gcloud app deploy app.yaml
 	```
+* After deployment, access your service at `https://<project name>.appspot.com/`

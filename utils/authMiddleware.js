@@ -10,11 +10,11 @@ const extractSecretKey = requestContext => {
     throw new BadRequestError('Missing request context')
   }
 
-  if (!requestContext.secretKey) {
+  if (!requestContext.settings || !requestContext.settings.secretKey) {
     throw new UnauthorizedError('Missing secret key in request context')
   }
   
-  return requestContext.secretKey
+  return requestContext.settings.secretKey
 }
 
 const authMiddleware = (req, _, next) => {
