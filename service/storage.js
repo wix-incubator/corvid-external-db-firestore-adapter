@@ -1,5 +1,5 @@
 const uuid = require('uuid/v4')
-const BadRequestError = require('../error/bad-request')
+const BadRequestError = require('../model/error/bad-request')
 const client = require('../client/firestore')
 
 exports.find = async payload => {

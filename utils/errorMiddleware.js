@@ -1,7 +1,7 @@
-const BadRequestError = require('../error/bad-request')
-const AlreadyExistsError = require('../error/already-exists')
-const NotFoundError = require('../error/not-found')
-const UnauthorizedError = require('../error/unauthorized')
+const BadRequestError = require('../model/error/bad-request')
+const AlreadyExistsError = require('../model/error/already-exists')
+const NotFoundError = require('../model/error/not-found')
+const UnauthorizedError = require('../model/error/unauthorized')
 
 /**
  * A helper that allows passing errors from async/await functions

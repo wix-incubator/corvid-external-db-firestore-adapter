@@ -1,5 +1,5 @@
-const BadRequestError = require('../error/bad-request')
-const UnauthorizedError = require('../error/unauthorized')
+const BadRequestError = require('../model/error/bad-request')
+const UnauthorizedError = require('../model/error/unauthorized')
 const load = require('./fileLoader')
 const { configValidator } = require('../utils/validators')
 
