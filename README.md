@@ -35,3 +35,18 @@ The schemas must be stored in a file `schemas` at the root of the package. This 
 The schemas configuration is a JSON object that contains an array of schemas that you want to enable.
 
 An example configuration can be found in `schemas.example.json` file.
+
+## Deployment
+
+* Install the [Google Cloud SDK](https://cloud.google.com/sdk/) for your operating system;
+* Acquire local credentials;
+
+	```
+	gcloud auth application-default login
+	```
+* Run deployment command in your connector project folder.
+
+	```
+	gcloud app deploy app.yaml
+	```
+* After deployment, access your service at `https://<project name>.appspot.com/`

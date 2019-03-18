@@ -9,7 +9,10 @@ exports.find = async payload => {
     const results = await client.query(collectionName)
     const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id } })
     
-    return enhanced
+    return {
+        items: enhanced, 
+        totalCount: enhanced.length
+    }
 }
 
 exports.get = async payload => {
@@ -24,8 +27,10 @@ exports.get = async payload => {
     }
 
     return {
-        _id: document.id,
-        ...document.data()
+        item: {
+            _id: document.id,
+            ...document.data()
+        }
     }
 }
 
@@ -37,7 +42,7 @@ exports.insert = async payload => {
     if (!item._id) item._id = uuid()
     await client.insert(collectionName, item)
 
-    return item
+    return { item }
 }
 
 exports.update = async payload => {
@@ -47,7 +52,7 @@ exports.update = async payload => {
 
     await client.update(collectionName, item)
 
-    return item
+    return { item }
 }
 
 exports.remove = async payload => {
@@ -55,11 +60,10 @@ exports.remove = async payload => {
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body')
     if (!itemId) throw new BadRequestError('Missing itemId in request body')
 
+    const item = await client.get(collectionName, itemId)
     await client.delete(collectionName, itemId)
 
-    return {
-        _id: itemId
-    }
+    return { item }
 }
 
 exports.count = async payload => {

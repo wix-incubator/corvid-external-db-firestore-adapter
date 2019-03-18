@@ -7,7 +7,7 @@ exports.find = async payload => {
   const { schemaIds } = payload
   if (!schemaIds) throw new BadRequestError('Missing schemaIds in request body')
 
-  const filtered = schemas.filter(schema => schemaIds.contains(schema.id))
+  const filtered = schemas.filter(schema => schemaIds.includes(schema.id))
   
   return {
     schemas : filtered

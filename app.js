@@ -7,7 +7,7 @@ const errorMiddleware = require('./utils/errorMiddleware')
 const authMiddleware = require('./utils/authMiddleware')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 8080;
 
 app.use(bodyParser.json())
 app.use(authMiddleware)
