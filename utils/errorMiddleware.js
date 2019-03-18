@@ -1,10 +1,38 @@
+const BadRequestError = require('../error/bad-request')
+const AlreadyExistsError = require('../error/already-exists')
+const NotFoundError = require('../error/not-found')
+const UnauthorizedError = require('../error/unauthorized')
+
 /**
  * A helper that allows passing errors from async/await functions
  * to express 'next' for correct handling.
  * @param {*} fn the function to apply middleware to.
  */
-const errorMiddleware = fn => (req, res, next) => {
+exports.wrapError = fn => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next)
 }
 
-module.exports = errorMiddleware
+exports.errorMiddleware = (err, req, res, next) => {
+  switch(err.constructor.name) {
+    case BadRequestError.name: res
+      .status(400)
+      .send({ message: err.message })
+      break;
+    case AlreadyExistsError.name: res
+      .status(409)
+      .send({ message: err.message })
+      break;
+    case UnauthorizedError.name: res
+      .status(401)
+      .send({ message: err.message })
+      break;
+    case NotFoundError.name: res
+      .status(404)
+      .send({ message: err.message })
+      break;
+    default: res
+      .status(500)
+      .send({ message: err.message })
+      break;
+  }
+}

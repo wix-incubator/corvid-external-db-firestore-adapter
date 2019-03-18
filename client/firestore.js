@@ -60,7 +60,6 @@ exports.update = async (collectionName, item) => {
     }
 
   }
-  
 }
 
 exports.insert = async (collectionName, item) => {
