@@ -19,21 +19,21 @@
                 "displayName": "Name",
                 "type": "text",
                 "queryOperators": [
-                    "eq"
+                    "urlized", "hasSome"
                 ]
             },
             "occupation": {
                 "displayName": "Occupation",
                 "type": "text",
                 "queryOperators": [
-                    "eq"
+                    "urlized", "hasSome"
                 ]
             },
             "age": {
                 "displayName": "Age",
                 "type": "number",
                 "queryOperators": [
-                    "eq"
+                    "urlized", "hasSome"
                 ]
             }
         },

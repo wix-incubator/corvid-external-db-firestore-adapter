@@ -3,7 +3,6 @@ const NotFoundError = require('../model/error/not-found')
 const AlreadyExistsError = require('../model/error/already-exists')
 const load = require('../utils/fileLoader')
 const { configValidator } = require('../utils/validators')
-const makeQueries = require('./support/query')
 
 const serviceAccount = configValidator(load('config.json')).googleServiceAccount
 const firestore = new Firestore({
@@ -12,10 +11,10 @@ const firestore = new Firestore({
   projectId: serviceAccount.project_id,
 })
 
-exports.query = async (collectionName, filter) => {
-  const queries = makeQueries(firestore, collectionName, filter)
-  
-  return Promise.all(queries.map(query => query.get()))
+exports.query = collectionName => {
+  return firestore
+    .collection(collectionName)
+    .get()
 }
 
 exports.get = (collectionName, itemId) => {
