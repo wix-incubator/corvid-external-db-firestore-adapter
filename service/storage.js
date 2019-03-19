@@ -3,15 +3,16 @@ const BadRequestError = require('../model/error/bad-request')
 const client = require('../client/firestore')
 
 exports.find = async payload => {
-    const { collectionName } = payload
+    const { collectionName, filter } = payload
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body')
 
-    const results = await client.query(collectionName)
-    const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id } })
+    const results = await client.query(collectionName, filter)
+    const enhancedResults = results.map(result => result.docs.map(doc => { return { ...doc.data(), _id: doc.id }}))
+    const flattenedResults = enhancedResults.reduce((x,y) => x.concat(y), [])
     
     return {
-        items: enhanced, 
-        totalCount: enhanced.length
+        items: flattenedResults, 
+        totalCount: flattenedResults.length
     }
 }
 
