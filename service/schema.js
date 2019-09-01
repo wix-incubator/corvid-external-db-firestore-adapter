@@ -19,7 +19,5 @@ exports.list = async payload => {
 }
 
 exports.provision = async payload => {
-  await client.listCollectionIds()
-
-  return {}
+  return await client.listCollectionIds();
 }
