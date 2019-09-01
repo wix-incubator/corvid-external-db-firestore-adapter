@@ -1,14 +1,16 @@
 const EMPTY = ''
 
 exports.parseSort = (sort, collRef) => {
+  let sortRef = collRef;
+
   if (sort) {
     sort.forEach( sortOp => {
-      collRef.orderBy(sortOp.fieldName, sortOp.direction);
+      sortRef = sortRef.orderBy(sortOp.fieldName, sortOp.direction);
     })
   }
 
-  return EMPTY
-}
+  return sortRef;
+};
 
 const parseInternal = entry => {
   return `${entry.fieldName} ${entry.direction.toUpperCase()}`

@@ -15,7 +15,7 @@ const extractSecretKey = requestContext => {
   }
   
   return requestContext.settings.secretKey
-}
+};
 
 const authMiddleware = (req, _, next) => {
   const secretKey = extractSecretKey(req.body.requestContext)
@@ -25,6 +25,6 @@ const authMiddleware = (req, _, next) => {
   }
   
   next()
-}
+};
 
 module.exports = authMiddleware

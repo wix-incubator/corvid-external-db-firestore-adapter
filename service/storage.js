@@ -12,8 +12,8 @@ exports.find = async payload => {
         throw new BadRequestError('Missing skip in request body')
     if (!query.limit) throw new BadRequestError('Missing limit in request body')
 
-    const parsedFilter = parseFilter(filter);
-    const parsedSort = parseSort(sort);
+    // const parsedFilter = parseFilter(filter);
+    // const parsedSort = parseSort(sort);
 
     const results = await client.query(query);
     const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id }})

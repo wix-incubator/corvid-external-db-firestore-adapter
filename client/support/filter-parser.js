@@ -1,39 +1,42 @@
-const BadRequestError = require('../../model/error/bad-request')
-const EMPTY = ''
+const BadRequestError = require('../../model/error/bad-request');
+const EMPTY = '';
 
-exports.parseFilter = filter => {
+exports.parseFilter = (filter, query) => {
   if (filter && filter.operator) {
-    const parsed = parseInternal(filter);
-    return parsed ? `WHERE ${parsed}` : EMPTY;
+    return  parseInternal(filter, query);
+    //return parsed ? `WHERE ${parsed}` : EMPTY;
   }
-
-  return EMPTY;
+  return query;
 };
 
-const parseInternal = filter => {
+const parseInternal = (filter, query) => {
   switch (filter.operator) {
     case '$and': {
-      const value = filter.value.map(parseInternal).join(' AND ')
-      return value ? `(${value})` : value
+      let fiteredQuery = query;
+      filter.value.forEach( filterOp => {
+        fiteredQuery = parseInternal(filterOp, query);
+        });
+      //return value ? `(${value})` : value;
+      return fiteredQuery;
     }
     case '$or': {
-      const value = filter.value.map(parseInternal).join(' OR ')
-      return value ? `(${value})` : value
+      const value = filter.value.map(parseInternal).join(' OR ');
+      return value ? `(${value})` : value;
     }
     case '$not': {
-      const value = parseInternal(filter.value)
-      return value ? `NOT (${value})` : value
+      const value = parseInternal(filter.value);
+      return value ? `NOT (${value})` : value;
     }
     case '$ne':
-      return `${filter.fieldName} <> ${mapValue(filter.value)}`
+      return query.where(`${filter.fieldName}`, '!=', `${mapValue(filter.value)}`);
     case '$lt':
-      return `${filter.fieldName} < ${mapValue(filter.value)}`
+      return query.where(`${filter.fieldName}`, '<', `${mapValue(filter.value)}`);
     case '$lte':
-      return `${filter.fieldName} <= ${mapValue(filter.value)}`
+      return query.where(`${filter.fieldName}`,  '<=', `${mapValue(filter.value)}`);
     case '$gt':
-      return `${filter.fieldName} > ${mapValue(filter.value)}`
+      return query.where(`${filter.fieldName}`, '>', `${mapValue(filter.value)}`);
     case '$gte':
-      return `${filter.fieldName} >= ${mapValue(filter.value)}`
+      return query.where(`${filter.fieldName}`, '>=', `${mapValue(filter.value)}`);
     case '$hasSome':
     case '$contains': {
       const list = filter.value
@@ -53,7 +56,7 @@ const parseInternal = filter => {
     case '$eq': {
       return filter.value === null || filter.value === undefined
         ? `${filter.fieldName} IS NULL`
-        : `${filter.fieldName} = ${mapValue(filter.value)}`
+        : query.where(`${filter.fieldName}`, '==', `${mapValue(filter.value)}`);
     }
     default:
       throw new BadRequestError(
