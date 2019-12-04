@@ -26,8 +26,8 @@ exports.query = (query) => {
 
 
   return filteredQuery
-      .limit(query.limit)
-      .offset(query.skip)
+    .limit(query.limit)
+    .offset(query.skip)
     .get()
 };
 
@@ -40,7 +40,7 @@ exports.get = (collectionName, itemId) => {
 exports.listCollectionIds = () => {
   return firestore
     .listCollections()
-    .then(coll => coll.map(data => data.id));
+    .then(coll => coll.map(data => { return { id: data.id } }));
 };
 
 exports.delete = async (collectionName, itemId) => {
@@ -50,7 +50,7 @@ exports.delete = async (collectionName, itemId) => {
       .delete({ exists: true });
 
   } catch (e) {
-    switch(e.code) {
+    switch (e.code) {
       case 5: throw new NotFoundError();
       default: throw e;
     }
@@ -68,7 +68,7 @@ exports.update = async (collectionName, item) => {
       .commit();
 
   } catch (e) {
-    switch(e.code) {
+    switch (e.code) {
       case 5: throw new NotFoundError();
       default: throw e;
     }
@@ -83,10 +83,23 @@ exports.insert = async (collectionName, item) => {
       .create(item);
 
   } catch (e) {
-    switch(e.code) {
+    switch (e.code) {
       case 6: throw new AlreadyExistsError();
       default: throw e;
     }
 
   }
 };
+
+exports.getFirstDoc = async (collectionName) => {
+  
+  let collectionRef = firestore.collection(collectionName).limit(1);
+
+  const doc = await collectionRef.get();
+  const data = doc.docs[0].data();
+
+  console.log('data: ' + JSON.stringify(data));
+
+  return data;
+}
+

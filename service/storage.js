@@ -79,7 +79,7 @@ exports.count = async payload => {
     const { collectionName } = payload;
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body');
 
-    const results = await client.query(collectionName)[0];
+    const results = await client.query({collectionName: collectionName, limit: 1000, skip: 0});
 
     return {
         totalCount: results.size
