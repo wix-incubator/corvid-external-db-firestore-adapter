@@ -10,8 +10,8 @@ This project allows to plug in [Google Cloud Firestore](https://cloud.google.com
 Follow instructions on the Google Cloud Run [quickstart guide](https://cloud.google.com/run/docs/quickstarts/prebuilt-deploy).
 In the form of creating service,
 
-1. Use <gcr.io/corvid-api/firestore-connector-node> as a container image.
-2. Select Cloud Run (fully managed) as your development platform.
+1. Use **gcr.io/corvid-api/firestore-connector-node** as a container image.
+2. Select Cloud Run **(fully managed)** as your development platform.
 3. Select **us-east1** region.
 4. Select **Allow unauthenticated invocations** to be able to access the connector from Corvid
 5. Click *Create* to deploy the image to Cloud Run and wait for the deployment to finish.
