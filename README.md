@@ -57,11 +57,18 @@ In the browser you should see
   
 ## Deployment to Google App Engine using gcloud CLI
 
+* Check out the source code
+
+  ```bash
+   git clone https://github.com/wix-private/firestore-connector-node.git
+   cd firestore-connector-node
+  ```
+
 * Run deployment command in your connector project folder.
 
   ```bash
   gcloud app deploy
-	```
+  ```
 
 * After deployment, access your service at `https://<project name>.appspot.com/`
 
