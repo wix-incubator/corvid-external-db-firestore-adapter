@@ -59,6 +59,7 @@ exports.delete = async (collectionName, itemId) => {
 };
 
 exports.update = async (collectionName, item) => {
+  // TODO: move this implementation to use decent update
   try {
     const reference = firestore.doc(`${collectionName}/${item._id}`);
     await firestore
