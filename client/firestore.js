@@ -1,14 +1,9 @@
 const Firestore = require('@google-cloud/firestore');
 const NotFoundError = require('../model/error/not-found');
 const AlreadyExistsError = require('../model/error/already-exists');
-const load = require('../utils/fileLoader');
-const { configValidator } = require('../utils/validators');
 
 const { parseFilter } = require('./support/filter-parser')
 const { parseSort } = require('./support/sort-parser')
-
-
-const serviceAccount = configValidator(load('config.json')).googleServiceAccount;
 
 const firestore = new Firestore({
   // client_email: serviceAccount.client_email,
@@ -94,7 +89,7 @@ exports.insert = async (collectionName, item) => {
 
 exports.getFirstDoc = async (collectionName) => {
   
-  let collectionRef = firestore.collection(collectionName).limit(1);
+  const collectionRef = firestore.collection(collectionName).limit(1);
 
   const doc = await collectionRef.get();
   const data = doc.docs[0].data();
@@ -102,5 +97,19 @@ exports.getFirstDoc = async (collectionName) => {
   console.log('data: ' + JSON.stringify(data));
 
   return data;
+}
+
+exports.getSettings = async () => {
+
+  const settingsRef = firestore.doc('_settings/settings');
+
+  try{
+    const settingsDoc = await settingsRef.get();
+
+    return settingsDoc.data();
+  } catch (e) {
+    
+    console.log('error fetching settings: ' + JSON.stringify(e));
+  }
 }
 
