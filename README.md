@@ -20,7 +20,8 @@ In the form of creating service,
 2. Select Cloud Run **(fully managed)** as your development platform.
 3. Select **us-east1** region.
 4. Select **Allow unauthenticated invocations** to be able to access the connector from Corvid
-5. Click *Create* to deploy the image to Cloud Run and wait for the deployment to finish.
+5. Add **Environment variable** with name of "SECRET_KEY" and put your secret key as a value. **This value will be used for connecting Corvid site.**
+6. Click *Create* to deploy the image to Cloud Run and wait for the deployment to finish.
 
 Click the displayed URL link to test the deployed connector.
 In the browser you should see
@@ -70,7 +71,16 @@ In the browser you should see
   gcloud app deploy
   ```
 
-* After deployment, access your service at `https://<project name>.appspot.com/`
+* After deployment, access your service at `https://<project id>.appspot.com/`
+
+## Connecting Firestore to Corvid site
+
+Follow [instructions here](https://support.wix.com/en/article/corvid-adding-and-deleting-an-external-database-collection).
+In the connection Dialog settings put:
+
+* The **connector service URL** from steps above in the "Add an endpoint URL" field
+* {"secretKey":"**Your Secret Key from the deployment step**"} in the Configuration field
+You should see Firestore collections in the Databases sections of your site.
 
 # Development
 
