@@ -1,1 +1,4 @@
 runtime: nodejs10
+service: corvid-firestore-connector
+
+instance_class: F4_1G
