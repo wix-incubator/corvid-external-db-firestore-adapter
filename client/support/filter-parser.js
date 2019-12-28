@@ -10,7 +10,9 @@ exports.parseFilter = (filter, query) => {
 };
 
 const parseInternal = (filter, query) => {
+
   switch (filter.operator) {
+
     case '$and': {
       let fiteredQuery = query;
       filter.value.forEach( filterOp => {
@@ -19,16 +21,17 @@ const parseInternal = (filter, query) => {
       //return value ? `(${value})` : value;
       return fiteredQuery;
     }
+    
     case '$or': {
       const value = filter.value.map(parseInternal).join(' OR ');
       return value ? `(${value})` : value;
     }
-    case '$not': {
-      const value = parseInternal(filter.value);
-      return value ? `NOT (${value})` : value;
-    }
-    case '$ne':
-      return query.where(`${filter.fieldName}`, '!=', `${mapValue(filter.value)}`);
+    // case '$not': {
+    //   const value = parseInternal(filter.value);
+    //   return value ? `NOT (${value})` : value;
+    // }
+    // case '$ne':
+    //   return query.where(`${filter.fieldName}`, '!=', `${mapValue(filter.value)}`);
     case '$lt':
       return query.where(`${filter.fieldName}`, '<', `${mapValue(filter.value)}`);
     case '$lte':

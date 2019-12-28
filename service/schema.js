@@ -37,7 +37,7 @@ async function describeDoc(collectionId) {
   return {
     displayName: collectionId,
     id: collectionId,
-    // allowedOperations: load('config.json').allowedOperations,
+    allowedOperations: ['get', 'find', 'update', 'insert', 'remove'],
     maxPageSize: 50,
     ttl: 3600,
     fields: jsonFieldsToCorvidFields(Object.entries(aDoc))
@@ -59,8 +59,8 @@ const jsonFieldsToCorvidFields = columns => {
           'lte',
           'gte',
           'or',
-          'not',
-          'ne',
+          // 'not',
+          // 'ne',
           'startsWith',
           'endsWith'
         ]

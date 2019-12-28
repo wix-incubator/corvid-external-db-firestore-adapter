@@ -16,11 +16,14 @@ exports.query = (query) => {
   console.log('got query: ' + JSON.stringify(query));
   const collRef = firestore.collection(query.collectionName);
 
-  let sortedQuery = parseSort(query.sort, collRef);
-  const filteredQuery = parseFilter(query.filter, sortedQuery);
-
-
-  return filteredQuery
+  let fsQuery = parseSort(query.sort, collRef);  
+  fsQuery = parseFilter(query.filter, fsQuery);
+  
+  if (query.select){
+    fsQuery = fsQuery.select(query.select);
+  }
+  
+  return fsQuery
     .limit(query.limit)
     .offset(query.skip)
     .get()
@@ -98,18 +101,3 @@ exports.getFirstDoc = async (collectionName) => {
 
   return data;
 }
-
-exports.getSettings = async () => {
-
-  const settingsRef = firestore.doc('_settings/settings');
-
-  try{
-    const settingsDoc = await settingsRef.get();
-
-    return settingsDoc.data();
-  } catch (e) {
-    
-    console.log('error fetching settings: ' + JSON.stringify(e));
-  }
-}
-

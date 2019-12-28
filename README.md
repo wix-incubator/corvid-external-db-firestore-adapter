@@ -47,7 +47,7 @@ In the browser you should see
 * Deploy the Corvid connector container
 
     ```bash
-    gcloud run deploy --image gcr.io/corvid-api/firestore-connector-node --platform managed --region us-east1
+    gcloud run deploy --image gcr.io/corvid-api/firestore-connector-node --platform managed --region us-east1 --set-env-vars SECRET_KEY=[YOUR SECRET KEY]
     ```
 
   * Answer **y** when prompted "Allow unauthenticated invocations to [firestore-connector-node] (y/N)?"
