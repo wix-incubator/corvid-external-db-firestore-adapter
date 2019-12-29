@@ -56,15 +56,13 @@ exports.delete = async (collectionName, itemId) => {
   }
 };
 
-exports.update = async (collectionName, item) => {
-  // TODO: move this implementation to use decent update
+exports.update = async (collectionName, item, merge = true) => {
+
+  //console.log('got update: ' + JSON.stringify(item));
+  
   try {
     const reference = firestore.doc(`${collectionName}/${item._id}`);
-    await firestore
-      .batch()
-      .delete(reference, { exists: true })
-      .create(reference, item)
-      .commit();
+    await reference.set(item, {merge: merge});
 
   } catch (e) {
     switch (e.code) {

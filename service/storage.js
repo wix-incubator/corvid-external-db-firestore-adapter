@@ -4,7 +4,7 @@ const client = require('../client/firestore');
 
 exports.find = async payload => {
 
-    console.log('got payload: ' + JSON.stringify(payload));
+    //console.log('got payload: ' + JSON.stringify(payload));
     const query = { collectionName, filter, sort, skip, limit } = payload;
     if (!query.collectionName)
         throw new BadRequestError('Missing collectionName in request body')
@@ -12,15 +12,12 @@ exports.find = async payload => {
         throw new BadRequestError('Missing skip in request body')
     if (!query.limit) throw new BadRequestError('Missing limit in request body')
 
-    // const parsedFilter = parseFilter(filter);
-    // const parsedSort = parseSort(sort);
-
     const results = await client.query(query);
     const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id }})
 
     return {
         items: enhanced,
-        totalCount: 1000000
+        totalCount: query.skip + query.limit + 1
     }
 };
 
