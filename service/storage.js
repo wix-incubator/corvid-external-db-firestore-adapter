@@ -17,7 +17,7 @@ exports.find = async payload => {
 
     return {
         items: enhanced,
-        totalCount: query.skip + query.limit + 1
+        totalCount: enhanced.length
     }
 };
 
