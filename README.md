@@ -70,7 +70,7 @@ Copy the service URL. You will need it to [connect Firestore to your Corvid enab
 1.  Check out the source code:
 
   ```bash
-   git clone https://github.com/wix-private/firestore-connector-node.git
+   git clone https://github.com/wix-incubator/firestore-connector-node.git
    cd firestore-connector-node
   ```
 
