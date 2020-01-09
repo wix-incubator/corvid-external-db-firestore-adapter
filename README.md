@@ -98,7 +98,7 @@ You should now see Firestore collections in the Databases sections of the sideba
 1. Check out the source code:
 
   ```bash
-   git clone https://github.com/wix-private/firestore-connector-node.git
+   git clone https://github.com/wix-incubator/firestore-connector-node.git
    cd firestore-connector-node
   ```
 
