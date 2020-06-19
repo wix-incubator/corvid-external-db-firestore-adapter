@@ -73,8 +73,13 @@ Copy the service URL. You will need it to [connect Firestore to your Corvid enab
    git clone https://github.com/wix-incubator/firestore-connector-node.git
    cd firestore-connector-node
   ```
+2.  Set the SECRET_KEY in the app.yaml file:
 
-2. [Deploy the local code and/or configuration of your app to App Engine](https://cloud.google.com/sdk/gcloud/reference/app/deploy):
+  ```bash
+  sed -i -e 's/myFirebaseSecret/[YOUR SECRET KEY]/' app.yaml
+  ```
+
+3. [Deploy the local code and/or configuration of your app to App Engine](https://cloud.google.com/sdk/gcloud/reference/app/deploy):
 
   ```bash
   gcloud app deploy
@@ -82,6 +87,18 @@ Copy the service URL. You will need it to [connect Firestore to your Corvid enab
 
 3. After deployment, access your service at `https://<project id>.appspot.com/`
 
+4. Test your adaptor by running
+```bash
+curl --location --request POST 'https://corvid-firestore-connector-dot-<project-id>.uc.r.appspot.com/schemas/list' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "requestContext": {
+        "settings": {
+            "secretKey": [YOUR SECRET KEY]
+        }
+    }
+}'
+```
 ## Connecting Firestore to your Corvid enabled Wix site
 
 Follow the [instructions here](https://support.wix.com/en/article/corvid-adding-and-deleting-an-external-database-collection).

@@ -12,6 +12,12 @@ const port = process.env.PORT || 8080;
 app.use(bodyParser.json())
 app.use(authMiddleware)
 
+app.use(function (req, res, next) {
+  req.body.requestContext.settings.secretKey="*******";
+  console.log(req.body);
+  next();
+}); 
+
 app.post('/schemas/find', wrapError(schemas.findSchemas))
 app.post('/schemas/list', wrapError(schemas.listSchemas))
 app.post('/data/find', wrapError(items.findItems))
