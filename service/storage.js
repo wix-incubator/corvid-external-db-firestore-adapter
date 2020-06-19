@@ -1,6 +1,8 @@
 const uuid = require('uuid/v4');
 const BadRequestError = require('../model/error/bad-request');
+const NotFoundError = require('../model/error/not-found');
 const client = require('../client/firestore');
+const Firestore = require('@google-cloud/firestore');
 
 exports.find = async payload => {
 
@@ -13,7 +15,7 @@ exports.find = async payload => {
     if (!query.limit) throw new BadRequestError('Missing limit in request body')
 
     const results = await client.query(query);
-    const enhanced = results.docs.map(doc => { return { ...doc.data(), _id: doc.id }})
+    const enhanced = results.docs.map(doc => { return wrapDates({ ...doc.data(), _id: doc.id }) })
 
     return {
         items: enhanced,
@@ -26,17 +28,19 @@ exports.get = async payload => {
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body');
     if (!itemId) throw new BadRequestError('Missing itemId in request body');
 
+    console.log('get: ' + JSON.stringify(payload));
+
     const document = await client.get(collectionName, itemId);
 
     if (!document.exists) {
-        throw new NotFoundError();
+        throw new NotFoundError(`item ${itemId} not found`);
     }
 
     return {
-        item: {
+        item: wrapDates({
             _id: document.id,
             ...document.data()
-        }
+        })
     }
 };
 
@@ -45,10 +49,12 @@ exports.insert = async payload => {
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body');
     if (!item) throw new BadRequestError('Missing item in request body');
 
-    if (!item._id) item._id = uuid();
-    await client.insert(collectionName, item);
+    console.log('insert: ' + JSON.stringify(payload));
 
-    return { item };
+    if (!item._id) item._id = uuid();
+    await client.insert(collectionName, extractDates(item));
+
+    return { item: wrapDates(item) };
 };
 
 exports.update = async payload => {
@@ -56,9 +62,11 @@ exports.update = async payload => {
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body');
     if (!item) throw new BadRequestError('Missing item in request body');
 
-    await client.update(collectionName, item);
+    console.log('update: ' + JSON.stringify(payload));
 
-    return { item };
+    await client.update(collectionName, extractDates(item));
+
+    return { item: wrapDates(item) };
 };
 
 exports.remove = async payload => {
@@ -69,16 +77,49 @@ exports.remove = async payload => {
     const item = await client.get(collectionName, itemId);
     await client.delete(collectionName, itemId);
 
-    return { item };
+    return { item: wrapDates(item) };
 };
 
 exports.count = async payload => {
     const { collectionName } = payload;
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body');
 
-    const results = await client.query({collectionName: collectionName, limit: 1000, skip: 0, select: 'id'});
+    const results = await client.query({ collectionName: collectionName, limit: 1000, skip: 0, select: 'id' });
 
     return {
         totalCount: results.size
     };
 };
+
+const extractDates = item => {
+    Object.keys(item).map(key => {
+        const value = item[key];
+        if (value === null) return;
+
+        const reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
+        if (typeof value === 'string') {
+            const re = reISO.exec(value);
+            if (re) {
+                item[key] = Firestore.Timestamp.fromDate(new Date(value));
+            }
+        }
+
+        if (typeof value === 'object' && '$date' in value) {
+            item[key] = Firestore.Timestamp.fromDate(value['$date']);
+        }
+    })
+
+    return item
+}
+
+const wrapDates = item => {
+    Object.keys(item)
+        .map(key => {
+            const value = item[key];
+            if (value instanceof Firestore.Timestamp) {
+                item[key] = { $date: item[key].toDate() }
+            }
+        })
+
+    return item
+}

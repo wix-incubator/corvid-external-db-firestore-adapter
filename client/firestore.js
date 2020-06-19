@@ -88,14 +88,70 @@ exports.insert = async (collectionName, item) => {
   }
 };
 
-exports.getFirstDoc = async (collectionName) => {
+const getFirstDoc = async (collectionName) => {
   
   const collectionRef = firestore.collection(collectionName).limit(1);
 
   const doc = await collectionRef.get();
   const data = doc.docs[0].data();
 
-  console.log('data: ' + JSON.stringify(data));
-
   return data;
+}
+
+exports.describeDoc = async (collectionId) => {
+
+  const aDoc = await getFirstDoc(collectionId)
+
+  return {
+    displayName: collectionId,
+    id: collectionId,
+    allowedOperations: ["get", "find", "count", "update", "insert", "remove"],
+    maxPageSize: 50,
+    ttl: 3600,
+    fields: jsonFieldsToCorvidFields(Object.entries(aDoc))
+  }
+}
+
+const jsonFieldsToCorvidFields = columns => {
+  return columns
+    .map(field => {
+      return {
+        displayName: field[0],
+        type: jsonValueTypeToCorvid(field[1]),
+        queryOperators: [
+          'eq',
+          'lt',
+          'gt',
+          'hasSome',
+          'and',
+          'lte',
+          'gte',
+          'or',
+          // 'not',
+          // 'ne',
+          'startsWith',
+          'endsWith'
+        ]
+      }
+    })
+    .reduce((map, obj) => {
+      map[obj.displayName] = obj
+      return map
+    }, {})
+}
+
+const jsonValueTypeToCorvid = val => {
+
+  const type = typeof val;
+  
+  switch (type) {
+    case 'string':
+      return 'text'
+    case 'object':      
+      if (val instanceof Firestore.Timestamp){
+        return 'datetime'
+      }
+    default:
+      return type
+  }
 }
