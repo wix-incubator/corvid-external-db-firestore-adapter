@@ -14,7 +14,7 @@ app.use(authMiddleware)
 
 app.use(function (req, res, next) {
   req.body.requestContext.settings.secretKey="*******";
-  console.log(req.body);
+  // console.log(req.body);
   next();
 }); 
 

@@ -13,7 +13,7 @@ const firestore = new Firestore({
 
 exports.query = (query) => {
 
-  console.log('got query: ' + JSON.stringify(query));
+  // console.log('got query: ' + JSON.stringify(query));
   const collRef = firestore.collection(query.collectionName);
 
   let fsQuery = parseSort(query.sort, collRef);  

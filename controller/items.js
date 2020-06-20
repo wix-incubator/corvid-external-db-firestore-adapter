@@ -13,7 +13,7 @@ exports.getItem = async (req, res) => {
 }
 
 exports.insertItem = async (req, res) => {
-  console.log('called insert with body: ' + JSON.stringify(req.body));
+  // console.log('called insert with body: ' + JSON.stringify(req.body));
   const insertResult = await Storage.insert(req.body)
 
   res.json(insertResult)
@@ -32,7 +32,7 @@ exports.removeItem = async (req, res) => {
 }
 
 exports.countItems = async (req, res) => {
-  console.log('called count with body: ' + JSON.stringify(req.body));
+  // console.log('called count with body: ' + JSON.stringify(req.body));
   const countResult = await Storage.count(req.body)
 
   res.json(countResult)
