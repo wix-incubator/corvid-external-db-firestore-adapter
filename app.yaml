@@ -4,5 +4,5 @@ service: corvid-firestore-connector
 instance_class: F4_1G
 
 env_variables:
-  SECRET_KEY: someNEwSecret
+  SECRET_KEY: myFirebaseSecret
   ALLOWED_OPERATIONS: '["get", "find", "count", "update", "insert", "remove"]'  
