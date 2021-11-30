@@ -81,10 +81,10 @@ exports.remove = async payload => {
 };
 
 exports.count = async payload => {
-    const { collectionName } = payload;
+    const { collectionName, filter } = payload;
     if (!collectionName) throw new BadRequestError('Missing collectionName in request body');
 
-    const results = await client.query({ collectionName: collectionName, limit: 1000, skip: 0, select: 'id' });
+    const results = await client.query({ collectionName: collectionName, limit: 1000, skip: 0, select: 'id', filter });
 
     return {
         totalCount: results.size
